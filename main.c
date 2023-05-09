@@ -12,5 +12,4 @@ int main() {
   fractais(estagios, rproducao);
   printf("Hello World\n");
   return 0;
-
 }
