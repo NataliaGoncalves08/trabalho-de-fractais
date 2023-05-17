@@ -6,8 +6,7 @@ char* gerar_sequencias(char F, char regra[15], char *string_de_retorno, int esta
   if(estagio_atual == 4) {
     fprintf(arquivo_strings, "Estágio %d: ", estagio_atual);
     //fprintf(arquivo_strings, "%s\n", string_auxiliar);
-    fputs(string_auxiliar, arquivo_strings);
-    fprintf(arquivo_strings, "\n");
+    fputs(string_de_retorno, arquivo_strings);
     
     return string_de_retorno;
   }
@@ -41,11 +40,11 @@ int main() {
   FILE *pont_estagios;
 
   //criação e alocação de dados
-  pont_estagios = fopen("estagios.txt", "w");
+  pont_estagios = fopen("estagios_fractal1.txt", "w");
   scanf("%c %d %s", &axioma, &graus, regra);
 
   //chamando funções
-  gerar_sequencias(axioma, regra, string_de_retorno, estagios, pont_estagios); //PARTE 1
+  gerar_sequencias(axioma, regra, string_de_retorno, estagios, pont_estagios);
 
   return 0;
   
