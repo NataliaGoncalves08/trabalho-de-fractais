@@ -17,12 +17,6 @@ void remover_caracteres(char *string_com_xy) {
 
 char* gerar_sequencias(char X, char regraX[12], char regraY[12], char *string_de_retorno, int estagio_atual, FILE *arquivo_strings) {
   char string_auxiliar[1000000];
-
-  if(estagio_atual == 0) {
-    fprintf(arquivo_strings, "Estágio %d: ", estagio_atual);
-    fputs("X\n", arquivo_strings);
-    return gerar_sequencias(X, regraX, regraY, regraX, estagio_atual + 1, arquivo_strings);
-  }
   
   if(estagio_atual == 4) {
     fprintf(arquivo_strings, "Estágio %d: ", estagio_atual);
