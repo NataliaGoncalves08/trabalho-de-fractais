@@ -111,8 +111,16 @@ int main() {
   } //funcionando! 
     
   else {
-    regras = fopen("regras_1F.txt", "r");
-    fscanf(regras, "%d %s %d %s", &n_do_fractal, axiomaF, &graus, regra);
+    //regras = fopen("regras_1F.txt", "r");
+    scanf("%d %s %d %s", &n_do_fractal, axiomaF, &graus, regra);
+    scanf("%d", &n_do_fractal);
+    for(int cont = 0, cont < 7; cont++) {
+      axiomaF[cont] = getchar();
+    }
+    scanf("%d", &graus);
+    for(int cont = 0, cont < 15; cont++) {
+      regra[cont] = getchar();
+    }
     fprintf(pont_estagios, "Estágio 1: F+F+F+F");
     pont_estagios = fopen("estagios_fractal1.txt", "w");
     gerar_sequenciasF(axiomaF, regra, string_de_retorno, estagios + 1, pont_estagios);
