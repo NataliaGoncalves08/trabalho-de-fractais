@@ -5,9 +5,24 @@ char* gerar_sequencias(char F, char regra[15], char *string_de_retorno, int esta
   char string_auxiliar[1000000];
   
   if(estagio_atual == 4) {
-    fprintf(arquivo_strings, "Estágio %d:", estagio_atual);
-    fputs(string_de_retorno, arquivo_strings);
-    return string_de_retorno;
+    //troca de valores
+    for (long int cont = 0; cont <= strlen(string_de_retorno); cont++) {
+      
+      //substituição pela regra
+      if (regra[cont] == F) {
+        for (long int cont2 = 0; cont2 <= strlen(regra); cont2++) {
+          string_auxiliar[strlen(string_auxiliar)] = regra[cont2];
+        }
+      }
+        
+      //substituição pelo caractere atual
+      else {
+        string_auxiliar[strlen(string_auxiliar)] = string_de_retorno[cont];
+      }
+    }
+    fprintf(arquivo_strings, "Estágio %d: ", estagio_atual);
+    fputs(string_auxiliar, arquivo_strings);
+    return "";
   }
   else {
     //troca de valores
@@ -28,7 +43,7 @@ char* gerar_sequencias(char F, char regra[15], char *string_de_retorno, int esta
     
     //contador de estagios
     if(estagio_atual < 4) {
-      fprintf(arquivo_strings, "Estágio %d:", estagio_atual);
+      fprintf(arquivo_strings, "Estágio %d: ", estagio_atual);
       fputs(string_auxiliar, arquivo_strings);
       fprintf(arquivo_strings, "\n");
     }
@@ -42,7 +57,7 @@ int main() {
   char axioma; //axioma do fractal
   int graus; //grau de rotação usado para desenhar
   int n_do_fractal; //identificação do fractal
-  int estagios = 0; //contador de interações
+  int estagios = 1; //contador de interações
   char regra[15]; //regra de formação do fractal
   char string_de_retorno[1000000]; //string usada para armazenar as sequencias geradas
   FILE *pont_estagios; //ponteiro para criação do arquivo .txt
