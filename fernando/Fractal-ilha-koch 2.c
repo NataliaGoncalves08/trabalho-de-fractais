@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 
-#define QUANT_ESTA 3
+#define QUANT_ESTA 5
 
 typedef struct 
 {
@@ -22,10 +22,11 @@ typedef struct
 
 typedef struct 
 {
+
   int estagio;
   int Fs;
   int Carac;
-  
+
 }anali_esta;
 
  
@@ -47,15 +48,19 @@ void analise_do_estagio(anali_esta atual[QUANT_ESTA], char* str_ref, int estagio
   }
 }
 
-void imprimir_analise(anali_esta atual[QUANT_ESTA])
+void imprimir_analise(anali_esta atual[QUANT_ESTA], str_frac inicial)
 {
+
+  printf("\n Numero do fractal requerido: %d\n Axioma inicial: %s \n Angulo: %dº \n Regra de repetição %s \n quantidade de estagios: %d\n ",
+ inicial.Id, inicial.Axioma, inicial.Ang, inicial.Regra, QUANT_ESTA);
   for(int i = 0; i<QUANT_ESTA; i++)
   {
-    printf("\n  tiveram %d F's; %d caracteres; no estagio %d. ", atual[i].Fs, atual[i].Carac, atual[i].estagio);
+    printf("\n Estagio %d: %5d F's - %5d caracteres ", atual[i].estagio, atual[i].Fs, atual[i].Carac);
   }
 }
 
-char* gerar_sequenciasF(str_frac p, processamento_frac *atual, anali_esta * caracte) {
+char* gerar_sequenciasF(str_frac p, processamento_frac *atual, anali_esta * caracte) 
+{
 
   char string_auxiliar[1000000];
 
@@ -119,7 +124,8 @@ analise_do_estagio(caracte, atual->string_de_retorno, atual->estagios);
   return gerar_sequenciasF(p, atual, caracte);
 }
 
-int main() {
+int main() 
+{
   //declarações de variáveis
   str_frac inicial;
   processamento_frac processamento;
@@ -130,13 +136,13 @@ int main() {
   //FILE *regras; //tirar na versão final, serve apenas pra teste
 
   //atribuição de valores
-  printf("Insira o número do axioma desejado:\n ");
+  printf(" Insira o número do axioma desejado: ");
   scanf("%d", &inicial.Id);
-  printf("Insira o axioma inial\n ");
+  printf(" Insira o axioma inicial ");
   scanf("\n%[^\n]", inicial.Axioma);
-  printf("Insira o angulo\n ");
+  printf(" Insira o angulo ");
   scanf("%d", &inicial.Ang);
-  printf("Insira a regra de repetição\n ");
+  printf(" Insira a regra de repetição ");
   scanf("\n%[^\n]", inicial.Regra);
 
   //abertura de arquivo
@@ -145,7 +151,7 @@ int main() {
   //chamar função
   gerar_sequenciasF(inicial, &processamento, caracteres_por_estagio);
 
-  imprimir_analise(caracteres_por_estagio);
+  imprimir_analise(caracteres_por_estagio, inicial);
 
   return 0;
   
