@@ -24,10 +24,28 @@ char* gerar_sequencia(char X, char regraX[12], char regraY[12], char *string_de_
 
   //caso base
   if(estagio_atual == 4) {
+    for (long int cont = 0; cont <= strlen(string_de_retorno); cont++) {
+      //substituição de X
+      if (string_de_retorno[cont] == X) {
+        for (long int cont2 = 0; cont2 <= strlen(regraX); cont2++) {
+          string_auxiliar[strlen(string_auxiliar)] = regraX[cont2];
+        }
+      }
+      //substituição de Y
+      else if (string_de_retorno[cont] == 'Y'){ 
+        for (long int cont2 = 0; cont2 <= strlen(regraY); cont2++) {
+          string_auxiliar[strlen(string_auxiliar)] = regraY[cont2];
+        }
+      }
+      //substituição pelo caractere atual
+      else {
+        string_auxiliar[strlen(string_auxiliar)] = string_de_retorno[cont];
+      }
+    }
     fprintf(arquivo_strings, "Estágio %d: ", estagio_atual);
-    remover_caracteres(string_de_retorno);
-    fputs(string_de_retorno, arquivo_strings);
-    return string_de_retorno;
+    remover_caracteres(string_auxiliar);
+    fputs(string_auxiliar, arquivo_strings);
+    return "";
   }
   //primeiro estágio
   else if (estagio_atual == 1) {
