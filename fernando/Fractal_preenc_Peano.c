@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 
-#define QUANT_ESTA 4
+#define QUANT_ESTA 5
 
 typedef struct 
 {
@@ -40,7 +40,7 @@ void analise_do_estagio(anali_esta atual[QUANT_ESTA], char* str_ref, int estagio
   atual [estagio - 1].Ys = 0;
 
   atual [estagio - 1].estagio = estagio;
-  atual [estagio - 1].Carac = strlen(str_ref);
+  
   
   for(int i = 0; i < strlen(str_ref); i++)
   {
@@ -53,38 +53,13 @@ void analise_do_estagio(anali_esta atual[QUANT_ESTA], char* str_ref, int estagio
     else if(str_ref[i] == 'Y')
       atual[estagio - 1].Ys++;
   }
+  atual [estagio - 1].Carac = strlen(str_ref) - atual[estagio - 1].Xs - atual[estagio -1].Ys;
 }
 
-void remover_caracteres(char *string_com_xy) 
+void limpa_str(char* str_ref, int tamanho)
 {
-  char string_limpeza[1000000];
-  int contador_1 = 0;
-
-  //limpeza
-  for(int contador = 0; contador < strlen(string_com_xy); contador++) {
-    if((string_com_xy[contador] != 'X') && (string_com_xy[contador] != 'Y')) {
-      string_limpeza[contador_1] = string_com_xy[contador];
-      contador_1++;
-    }
-  }
-  //finalização da string limpa
-  string_limpeza[contador_1] = '\0';
-  //copia para a string de parametro
-  strncpy(string_com_xy, string_limpeza, contador_1 + 1);
-}
-
-void imprimir_analise(anali_esta atual[QUANT_ESTA], str_frac inicial)
-{
-
-  printf("\n Numero do fractal requerido: %d\n Axioma inicial: %c \n Angulo: %dº \n Regra de repetição X: %s \n Regra de repetição Y: %s \n quantidade de estagios: %d\n\n",
- inicial.Id, inicial.Axioma, inicial.Ang, inicial.RegraX, inicial.RegraY, QUANT_ESTA);
-  for(int i = 0; i<=QUANT_ESTA; i++)
-  {
-    if(i<QUANT_ESTA)
-      printf(" Estagio %d: %5d F's - %5d caracteres  - %5d X's - %5d Y's\n", atual[i].estagio, atual[i].Fs, atual[i].Carac, atual[i].Xs, atual[i].Ys);
-    else
-      printf("\n Estagio final: %5d F's - %5d caracteres  - 0 X's - 0 Y's\n", atual[i].Fs, atual[i].Carac);
-  }
+  for(int i = 0; i < tamanho; i++)
+    str_ref[i] = '\0';
 }
 
 void copiar_str(char* base, char* copia)
@@ -95,10 +70,43 @@ void copiar_str(char* base, char* copia)
   copia[strlen(base)] = '\0';
 }
 
+void remover_caracteres(char string_com_xy[1000000]) 
+{
+  char string_limpeza[1000000];
+  
+  //limpeza
+  for(int i = 0; i < strlen(string_com_xy); i++)
+    {
+      if((string_com_xy[i] != 'X') && (string_com_xy[i] != 'Y')) 
+      {
+        string_limpeza[strlen(string_limpeza)] = string_com_xy[i];
+      }
+    }
+  copiar_str(string_limpeza, string_com_xy);
+}
+
+void imprimir_analise(anali_esta atual[QUANT_ESTA], str_frac inicial)
+{
+
+  printf("\n Numero do fractal requerido: %d\n Axioma inicial: %c \n Angulo: %dº \n Regra de repetição X: %s \n Regra de repetição Y: %s \n quantidade de estagios: %d\n\n",
+ inicial.Id, inicial.Axioma, inicial.Ang, inicial.RegraX, inicial.RegraY, QUANT_ESTA);
+
+  printf("  Estagio  |    F´s    |  Caracteres  |    X´s    |    Y´s   \n");
+  
+  for(int i = 0; i<=QUANT_ESTA; i++)
+  {
+    if(i<QUANT_ESTA)
+      printf("     %d        %5d         %5d        %5d       %5d \n", atual[i].estagio, atual[i].Fs, atual[i].Carac, atual[i].Xs, atual[i].Ys);
+    else
+      printf("\n Estagio final: %5d F's - %5d caracteres  - 0 X's - 0 Y's\n", atual[i].Fs, atual[i].Carac);
+  }
+}
+
 char* gerar_sequencia(str_frac p, processamento_frac *atual, anali_esta* caracte) 
 {
   char string_auxiliar[1000000];
-
+  limpa_str(string_auxiliar, strlen(atual->string_de_retorno));
+  
   //caso base
   if(atual->estagios == QUANT_ESTA) {
     for (long int cont = 0; cont <= strlen(atual->string_de_retorno); cont++) {
@@ -119,7 +127,7 @@ char* gerar_sequencia(str_frac p, processamento_frac *atual, anali_esta* caracte
         string_auxiliar[strlen(string_auxiliar)] = atual->string_de_retorno[cont];
       }
     }
-    fprintf(atual->pont_estagios, "Estágio %d: ", atual->estagios);
+    fprintf(atual->pont_estagios, "\n-----------------------------------------------\n\n     ~-~-~ Estágio %d: ~-~-~\n\n", atual->estagios);
     analise_do_estagio(caracte, string_auxiliar, atual->estagios);
     remover_caracteres(string_auxiliar);
     analise_do_estagio(caracte, string_auxiliar, atual->estagios+1);
@@ -131,19 +139,23 @@ char* gerar_sequencia(str_frac p, processamento_frac *atual, anali_esta* caracte
     for (int cont = 0; cont < strlen(p.RegraX); cont++) {
       atual->string_de_retorno[strlen(atual->string_de_retorno)] = p.RegraX[cont];
     }
-    fprintf(atual->pont_estagios, "Estágio %d: ", atual->estagios);
+    fprintf(atual->pont_estagios, "\n     ~-~-~ Estágio %d: ~-~-~\n\n", atual->estagios);
+    copiar_str(atual->string_de_retorno, string_auxiliar);
     analise_do_estagio(caracte, atual->string_de_retorno, atual->estagios);
-    fputs(atual->string_de_retorno, atual->pont_estagios);
-    fprintf(atual->pont_estagios, "\n");
+    remover_caracteres(string_auxiliar);
     
+    fputs(string_auxiliar, atual->pont_estagios);
+    fprintf(atual->pont_estagios, "\n");
+
     atual->estagios++;
     return gerar_sequencia(p, atual, caracte);
   }
   
   else {
     //geração de sequencias
+    
     for (long int cont = 0; cont <= strlen(atual->string_de_retorno); cont++) {
-  
+
       //substituição de X
       if (atual->string_de_retorno[cont] == 'X') {
 
@@ -152,6 +164,7 @@ char* gerar_sequencia(str_frac p, processamento_frac *atual, anali_esta* caracte
         }
       }
       //substituição de Y
+      
       else if (atual->string_de_retorno[cont] == 'Y'){ 
         for (long int cont2 = 0; cont2 <= strlen(p.RegraY); cont2++) {
           string_auxiliar[strlen(string_auxiliar)] = p.RegraY[cont2];
@@ -163,16 +176,16 @@ char* gerar_sequencia(str_frac p, processamento_frac *atual, anali_esta* caracte
       }
     }
     //contador de estágios
-    if(atual->estagios < 4) {
+    if(atual->estagios < QUANT_ESTA) {
 
     // for(int i = 0; i < strlen(string_auxiliar); i++)
     // atual->string_de_retorno[i] = string_auxiliar[i];
 
     copiar_str(string_auxiliar, atual->string_de_retorno);
-      
-    fprintf(atual->pont_estagios, "Estágio %d: ", atual->estagios);
+    remover_caracteres(string_auxiliar);
+    fprintf(atual->pont_estagios, "\n-----------------------------------------------\n\n     ~-~-~ Estágio %d: ~-~-~\n\n", atual->estagios);
     analise_do_estagio(caracte, atual->string_de_retorno, atual->estagios);
-    fputs(atual->string_de_retorno, atual->pont_estagios);
+    fputs(string_auxiliar, atual->pont_estagios);
     fprintf(atual->pont_estagios, "\n");
 
     }
@@ -181,7 +194,7 @@ char* gerar_sequencia(str_frac p, processamento_frac *atual, anali_esta* caracte
   atual->estagios++;
   return gerar_sequencia(p, atual, caracte);
 }
-
+           
 int main() 
 {
 
@@ -205,12 +218,12 @@ int main()
   scanf("\n%[^\n]", inicial.RegraX);
   printf(" Insira a regra de repetição Y ");
   scanf("\n%[^\n]", inicial.RegraY);
-  
+
   //chamando funções
   gerar_sequencia(inicial, &processamento, caracteres_por_estagio);
 
   imprimir_analise(caracteres_por_estagio, inicial);
-  
+
   return 0;
-  
+
 }
