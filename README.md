@@ -13,5 +13,5 @@ o quesignifica que a mesma fórmula matemática ou algoritmo é aplicado repetid
 
 ## Especificação
 
-[Documento do Professor]([https://docs.google.com/document/d/1K8kbl0Xko9pCBn7dYld2CPmkOp6hpKIzsOH9vcwSDuY/edit](https://virtual.ufmg.br/20231/pluginfile.php/322697/mod_resource/content/8/231TP_Fractal.pdf))
-[Gerador de Fractal online](https://onlinemathtools.com/l-system-generator)
+- [Documento do Professor](https://virtual.ufmg.br/20231/pluginfile.php/322697/mod_resource/content/8/231TP_Fractal.pdf)
+- [Gerador de fractal online](https://onlinemathtools.com/l-system-generator)
