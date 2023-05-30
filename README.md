@@ -1,4 +1,4 @@
-# Trabalho Prático: Máquina de Busca
+# Trabalho Prático: Fractais
 Trabalho Prático de Matemática Discreta.
 ## Integrantes:
 - Fernando Coutinho
