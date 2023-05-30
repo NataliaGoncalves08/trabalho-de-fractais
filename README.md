@@ -15,3 +15,5 @@ o que significa que a mesma fórmula matemática ou algoritmo é aplicado repeti
 
 - [Documento do Professor](https://virtual.ufmg.br/20231/pluginfile.php/322697/mod_resource/content/8/231TP_Fractal.pdf)
 - [Gerador de fractal online](https://onlinemathtools.com/l-system-generator)
+- [Modelos de documenção de ED](https://drive.google.com/drive/folders/1sfjIvzIYMxGCWAycj_j6L1QXezAI-Mm3)
+
