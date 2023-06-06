@@ -20,10 +20,12 @@ char* gerar_sequencias(char F, char regra[15], char *string_de_retorno, int esta
         string_auxiliar[strlen(string_auxiliar)] = string_de_retorno[cont];
       }
     }
+    //gravação dos valores no arquivo
     fprintf(arquivo_strings, "Estágio %d: ", estagio_atual);
     fputs(string_auxiliar, arquivo_strings);
     return "";
   }
+    
   else {
     //troca de valores
     for (long int cont = 0; cont <= strlen(string_de_retorno); cont++) {
@@ -64,11 +66,22 @@ int main() {
 
   //criação e alocação de dados
   pont_estagios = fopen("estagios_fractal1.txt", "w"); //abertura e criação do arquivo final de sequencias
-  scanf("%d %c %d %s", &n_do_fractal, &axioma, &graus, regra);
 
+  printf("Digite o número do fractal: ");
+  scanf("%d", &n_do_fractal);
+  printf("Digite o axioma: ");
+  scanf("\n%[^\n]", &axioma);
+  printf("Digite o ângulo: ");
+  scanf("%d", &graus);
+  printf("Digite a regra de formação: ");
+  scanf("\n%[^\n]", regra);
+
+  fprintf(pont_estagios, "Número do fractal: %d\nAxioma: %c\nÂngulo: %d\nRegra de formação: %s\n", n_do_fractal, axioma, graus, regra);
+  
   //chamando funções
   gerar_sequencias(axioma, regra, string_de_retorno, estagios, pont_estagios);
 
+  fclose(pont_estagios);
   return 0;
   
 }
