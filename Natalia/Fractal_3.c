@@ -98,7 +98,6 @@ int main() {
   char axioma;; //axioma do fractal
   int graus;; //grau de rotação usado para desenhar
   int estagio = 1; //contador de interações
-  int n_do_fractal; //identificação do fractal
   char regraX[20]; //regras de formação do fractal
   char regraY[20]; 
   char string_de_retorno[1000000]; //string usada para armazenar as sequencias geradas
@@ -106,10 +105,8 @@ int main() {
   FILE *pont_estagios; //ponteiro para criação do arquivo .txt
 
   //criação e alocação de dados
-  pont_estagios = fopen("estagios_fractal2.txt", "w"); //abertura e criação do arquivo final de sequencias
+  pont_estagios = fopen("estagios_fractal3.txt", "w"); //abertura e criação do arquivo final de sequencias
   
-  printf("Digite o número do fractal: ");
-  scanf("%d", &n_do_fractal);
   printf("Digite o axioma: ");
   scanf("\n%[^\n]", &axioma);
   printf("Digite o ângulo: ");
@@ -119,6 +116,9 @@ int main() {
   printf("Digite a regra de Y: ");
   scanf("\n%[^\n]", regraY);
 
+  fprintf(pont_estagios, "Axioma: %c\nÂngulo: %d\nRegra de formação X: %s\nRegra de Formação Y: %s\n\n", axioma, graus, regraX, regraY);
+
+  
   //chamando funções
   gerar_sequencia(regraX, regraY, string_de_retorno, string_auxiliar, estagio, pont_estagios);
 
