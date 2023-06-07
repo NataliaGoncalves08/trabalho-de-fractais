@@ -1,10 +1,6 @@
 #include <stdio.h>
 #include <string.h>
 
-//preciso criar a string
-//ver quantos caracteres tem de cada tipo
-//gerar um arquivo com ela limpa
-
 void remover_caracteres(char *string_com_xy) {
   char string_limpeza[1000000];
   int contador_1 = 0;
@@ -16,8 +12,10 @@ void remover_caracteres(char *string_com_xy) {
       contador_1++;
     }
   }
+  
   //finalização da string limpa
   string_limpeza[contador_1] = '\0';
+  
   //copia para a string de parametro
   strncpy(string_com_xy, string_limpeza, contador_1 + 1);
 }
@@ -29,7 +27,8 @@ void limpeza(char *string, char *string_de_retorno) {
 }
 
 char* gerar_sequencia(char *regraX, char *regraY, char *string_de_retorno, char* string_auxiliar, int estagio, FILE *arquivo_strings) {
-  limpeza(string_auxiliar, string_de_retorno);
+  limpeza(string_auxiliar, string_de_retorno); //limpo a string auxiliar para um novo processamento
+  
   if (estagio == 1) {
     for(int cont = 0; cont < strlen(regraX); cont++) {
       string_de_retorno[cont] = regraX[cont];
@@ -99,23 +98,35 @@ char* gerar_sequencia(char *regraX, char *regraY, char *string_de_retorno, char*
 
 int main() {
   //declarações de variáveis
-  char axioma = 'X'; //axioma do fractal
-  int graus = 90; //grau de rotação usado para desenhar
-  int estagio = 1; //identificação do fractal
-  int n_do_fractal = 5; //contador de interações
-  char regraX[12] = "-YF+XFX+FY-";
-  char regraY[12] = "+XF-YFY-FX+"; //regras de formação do fractal
+  char axioma; //axioma do fractal
+  int graus; //grau de rotação usado para desenhar
+  int estagio = 1; //contador de interações
+  int n_do_fractal; //identificação do fractal
+  char regraX[12];
+  char regraY[12]; //regras de formação do fractal
   char string_de_retorno[1000000]; //string usada para armazenar as sequencias geradas
   char string_auxiliar[1000000];
   FILE *pont_estagios; //ponteiro para criação do arquivo .txt
-  FILE *arquivo_custo;
 
   //criação e alocação de dados
-  pont_estagios = fopen("estagios_fractal2.txt", "w"); //abertura e criação do arquivo final de sequencias
-  //scanf("%d %c %d%s%s", &n_do_fractal, &axioma, &graus, regraX, regraY);
+  pont_estagios = fopen("estagios_fractal2.txt", "w"); //abertura e criação do arquivo 
+  
+  printf("Digite o número do fractal: ");
+  scanf("%d", &n_do_fractal);
+  printf("Digite o axioma: ");
+  scanf("\n%[^\n]", &axioma);
+  printf("Digite o ângulo: ");
+  scanf("%d", &graus);
+  printf("Digite a regra de formação X: ");
+  scanf("\n%[^\n]", regraX);
+  printf("Digite a regra de formação Y: ");
+  scanf("\n%[^\n]", regraY);
+
+  fprintf(pont_estagios, "Número do fractal: %d\nAxioma: %c\nÂngulo: %d\nRegra de formação X: %s\nRegra de Formação Y: %s\n\n", n_do_fractal, axioma, graus, regraX, regraY);
 
   //chamando funções
   gerar_sequencia(regraX, regraY, string_de_retorno, string_auxiliar, estagio, pont_estagios);
 
+  fclose(pont_estagios);
   return 0;
-}
+} 
